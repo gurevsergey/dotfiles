@@ -1,0 +1,231 @@
+/* Dark minimal: matches the Waybar palette, font and rounded blocks. */
+@import url("/etc/xdg/swaync/style.css");
+
+:root {
+    --cc-bg: #20282f;
+    --noti-bg: 32, 40, 47;
+    --noti-bg-alpha: 1;
+    --noti-bg-darker: #20282f;
+    --noti-bg-hover: #2d3740;
+    --noti-bg-focus: #193d55;
+    --noti-border-color: #3b4853;
+    --noti-close-bg: #2d3740;
+    --noti-close-bg-hover: #e5737a;
+    --text-color: #d5dce2;
+    --text-color-disabled: #82919d;
+    --bg-selected: #193d55;
+    --border: 1px solid #3b4853;
+    --border-radius: 3px;
+    --notification-shadow: none;
+    --notification-icon-size: 32px;
+    --notification-app-icon-size: 16px;
+    --notification-group-icon-size: 20px;
+    --font-size-body: 14px;
+    --font-size-summary: 14px;
+    --hover-transition: background 120ms ease;
+    --hover-tranistion: background 120ms ease;
+    --group-collapse-transition: opacity 120ms ease;
+    --group-collapse-tranistion: opacity 120ms ease;
+}
+
+* {
+    font-family: "IBM Plex Sans", "JetBrainsMono Nerd Font", "Font Awesome 6 Free", sans-serif;
+    font-size: 14px;
+    text-shadow: none;
+}
+
+.control-center {
+    background: #20282f;
+    color: #d5dce2;
+    border: 1px solid #3b4853;
+    border-radius: 3px;
+    padding: 14px;
+    box-shadow: none;
+}
+
+.widget-title {
+    margin: 0;
+    padding: 8px 6px 0;
+}
+.widget-title > label {
+    color: #62b0e8;
+    font-size: 15px;
+    font-weight: 700;
+}
+.widget-title > button {
+    color: #a3afb9;
+    background: transparent;
+    background-image: none;
+    border: 1px solid transparent;
+    border-radius: 3px;
+    padding: 5px 7px;
+    box-shadow: none;
+    font-size: 12px;
+}
+.widget-title > button:hover {
+    color: #62b0e8;
+    background: #2d3740;
+    border-color: #3b4853;
+}
+.widget-title > button:disabled { color: #3b4853; }
+.widget-label { margin: 0; padding: 0 6px 14px; }
+.widget-label > label {
+    color: #62b0e8;
+    font-size: 15px;
+    font-weight: 700;
+}
+.widget-dnd {
+    margin: 0 6px 14px;
+    padding: 12px 0;
+    border-top: 1px solid #3b4853;
+    border-bottom: 1px solid #3b4853;
+    border-radius: 0;
+}
+.widget-dnd label { color: #a3afb9; font-size: 13px; }
+.widget-dnd switch {
+    background: #2d3740;
+    background-image: none;
+    border: 1px solid #3b4853;
+    border-radius: 3px;
+    min-width: 40px;
+    min-height: 20px;
+    box-shadow: none;
+}
+.widget-dnd switch slider {
+    background: #82919d;
+    background-image: none;
+    border: none;
+    border-radius: 3px;
+    min-width: 14px;
+    min-height: 14px;
+    margin: 3px;
+    box-shadow: none;
+}
+.widget-dnd switch:checked { background: #193d55; border-color: #62b0e8; }
+.widget-dnd switch:checked slider { background: #62b0e8; }
+.widget-dnd switch:focus-visible { outline: 1px solid #62b0e8; }
+
+.control-center .control-center-list-placeholder {
+    color: #a3afb9;
+    opacity: 1;
+}
+.widget-notifications { margin: 0; padding: 0; }
+.notification-row .notification-background { padding: 5px 6px; }
+.notification-row .notification-background .notification {
+    background: #20282f;
+    border: 1px solid #3b4853;
+    border-left: 3px solid #62b0e8;
+    border-radius: 3px;
+}
+.notification-row .notification-background .notification.low {
+    border-left-color: #3b4853;
+}
+.notification-row .notification-background .notification.critical {
+    border-left-color: #e5737a;
+}
+.notification-row .notification-background .notification .notification-default-action {
+    padding: 12px;
+    border-radius: 3px;
+}
+.notification-row .notification-background .notification .notification-default-action .notification-content .text-box .summary {
+    color: #62b0e8;
+    font-weight: 700;
+    font-size: 14px;
+}
+.notification-row .notification-background .notification.critical .notification-default-action .notification-content .text-box .summary {
+    color: #e5737a;
+}
+.notification-row .notification-background .notification .notification-default-action .notification-content .text-box .time {
+    color: #82919d;
+    font-size: 11px;
+    font-weight: 400;
+}
+.notification-row .notification-background .notification .notification-default-action .notification-content .text-box .body {
+    color: #d5dce2;
+    font-size: 14px;
+}
+.notification-row .notification-background .notification .notification-default-action .notification-content .image {
+    border-radius: 3px;
+    margin-right: 10px;
+}
+.notification-group .notification-group-headers .notification-group-header {
+    color: #62b0e8;
+    font-size: 12px;
+    font-weight: 700;
+}
+.close-button {
+    color: #a3afb9;
+    background: #2d3740;
+    border-radius: 3px;
+    min-width: 20px;
+    min-height: 20px;
+    margin-top: 8px;
+    margin-right: 8px;
+}
+.close-button:hover { background: #e5737a; color: #20282f; }
+.notification-row .notification-background .notification .notification-action > button {
+    background: #2d3740;
+    background-image: none;
+    color: #62b0e8;
+    border: 1px solid #3b4853;
+    border-radius: 3px;
+    padding: 7px 10px;
+    box-shadow: none;
+}
+.notification-row .notification-background .notification .notification-action > button:hover {
+    background: #193d55;
+    border-color: #62b0e8;
+}
+.floating-notifications .notification-row .notification-background { padding: 14px; }
+.floating-notifications .notification-row .notification-background .notification {
+    border-color: #3b4853;
+    border-left-color: #62b0e8;
+}
+.floating-notifications .notification-row .notification-background .notification.critical {
+    border-left-color: #e5737a;
+}
+scrollbar { background: transparent; }
+scrollbar slider { background: #3b4853; border-radius: 3px; min-width: 4px; }
+scrollbar slider:hover { background: #3b4853; }
+
+/* Reserve full text height even when the list expands. */
+.widget-title { min-height: 34px; padding: 4px 6px; }
+.widget-title > label { min-height: 26px; }
+.widget-title > button { min-height: 22px; }
+.widget-label { min-height: 24px; }
+.widget-label > label { min-height: 24px; }
+
+.widget-label { min-height: 26px; padding: 2px 6px; margin: 0; }
+.widget-label > label { min-height: 26px; }
+.widget-label:first-child > label { color: #62b0e8; }
+.widget-dnd { margin-top: 12px; }
+.widget-buttons-grid { margin: 12px 6px 0; padding: 0; }
+.widget-buttons-grid flowboxchild { padding: 0; }
+.widget-buttons-grid flowboxchild > button {
+    color: #a3afb9;
+    background: #2d3740;
+    background-image: none;
+    border: 1px solid #3b4853;
+    border-radius: 3px;
+    box-shadow: none;
+    padding: 8px 12px;
+}
+.widget-buttons-grid flowboxchild > button:hover {
+    color: #62b0e8;
+    background: #193d55;
+}
+
+/* Match the panel's compact hierarchy and muted labels. */
+.widget-label, .widget-label:first-child { padding: 6px 6px 4px; }
+.widget-label > label, .widget-label:first-child > label {
+    color: #d5dce2;
+    font-size: 16px;
+    font-weight: 600;
+    min-height: 30px;
+}
+.widget-buttons-grid flowboxchild > button { color: #d5dce2; }
+.widget-buttons-grid flowboxchild > button:hover {
+    color: #20282f;
+    background: #62b0e8;
+    border-color: #62b0e8;
+}

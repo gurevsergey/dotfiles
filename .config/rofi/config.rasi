@@ -1,0 +1,87 @@
+configuration {
+    modi: "drun,run,window";
+    show-icons: true;
+    icon-theme: "breeze-dark";
+    matching: "fuzzy";
+    sort: true;
+    sorting-method: "fzf";
+    me-select-entry: "";
+    me-accept-entry: "MousePrimary";
+    display-drun: "󰀻  Apps";
+    display-run: "  Run";
+    display-window: "󰖶  Windows";
+    drun-display-format: "{name}";
+    font: "IBM Plex Sans 11";
+}
+
+* {
+    bg:      #262e35;
+    bg-alt:  #20282f;
+    fg:      #d5dce2;
+    fg-dim:  #a3afb9;
+    accent:  #62b0e8;
+    accent2: #62b0e8;
+    background-color: transparent;
+    text-color: @fg;
+}
+
+window {
+    width: 600px;
+    background-color: @bg;
+    border: 1px;
+    border-color: @accent;
+    border-radius: 3px;
+    padding: 10px;
+}
+
+mainbox { spacing: 8px; children: [ inputbar, listview ]; }
+
+inputbar {
+    background-color: @bg-alt;
+    border-radius: 3px;
+    padding: 10px 14px;
+    spacing: 10px;
+    children: [ prompt, entry ];
+}
+prompt { text-color: @accent; }
+entry  {
+    placeholder: "Поиск...";
+    placeholder-color: @fg-dim;
+    text-color: @fg;
+    cursor: text;
+    cursor-color: @accent2;
+}
+
+listview {
+    lines: 8; columns: 1; spacing: 2px; scrollbar: false;
+    border: 0px;
+    background-color: transparent;
+}
+
+element {
+    padding: 6px 10px;
+    border-radius: 3px;
+    spacing: 12px;
+}
+element-icon { size: 20px; background-color: transparent; }
+element-text {
+    vertical-align: 0.5;
+    background-color: transparent;
+    text-color: inherit;
+    highlight: bold #62b0e8;
+}
+element normal.normal, element alternate.normal, element normal.active, element alternate.active {
+    background-color: transparent;
+    text-color: @fg;
+}
+element normal.urgent, element alternate.urgent {
+    background-color: transparent;
+    text-color: #e5737a;
+}
+element selected.normal, element selected.active, element selected.urgent {
+    background-color: #193d55;
+    text-color: #f3f6f9;
+    border: 0px 0px 0px 3px;
+    border-color: @accent;
+}
+element-text selected { text-color: #f3f6f9; highlight: bold underline #62b0e8; }

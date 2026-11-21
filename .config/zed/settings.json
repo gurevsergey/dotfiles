@@ -1,0 +1,68 @@
+{
+  "agent_servers": {
+    "claude-acp": {
+      "type": "registry"
+    }
+  },
+  "cli_default_open_behavior": "existing_window",
+  "theme": {
+    "mode": "dark",
+    "light": "WinBox 4 Dark",
+    "dark": "WinBox 4 Dark"
+  },
+  "ui_font_family": "IBM Plex Sans",
+  "ui_font_size": 15,
+  "buffer_font_family": "JetBrainsMono Nerd Font",
+  "buffer_font_size": 15,
+  "buffer_line_height": {
+    "custom": 1.7
+  },
+  "soft_wrap": "preferred_line_length",
+  "preferred_line_length": 80,
+  "show_wrap_guides": false,
+  "relative_line_numbers": false,
+  "cursor_blink": false,
+  "current_line_highlight": "none",
+  "indent_guides": {
+    "enabled": false
+  },
+  "tab_bar": {
+    "show_nav_history_buttons": false
+  },
+  "toolbar": {
+    "breadcrumbs": false,
+    "quick_actions": false
+  },
+  "scrollbar": {
+    "show": "never"
+  },
+  "gutter": {
+    "line_numbers": false,
+    "runnables": false,
+    "folds": false
+  },
+  "project_panel": {
+    "dock": "left",
+    "indent_size": 16,
+    "git_status": false
+  },
+  "outline_panel": {
+    "dock": "right"
+  },
+  "languages": {
+    "Markdown": {
+      "soft_wrap": "preferred_line_length",
+      "preferred_line_length": 80,
+      "buffer_font_family": "Noto Sans",
+      "buffer_font_size": 16,
+      "buffer_line_height": {
+        "custom": 1.8
+      },
+      "show_whitespaces": "none",
+      "format_on_save": "off"
+    }
+  },
+  "agent": {
+    "terminal_init_command": "claude"
+  }
+}

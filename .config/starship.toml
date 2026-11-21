@@ -1,0 +1,56 @@
+# WinBox 4 — compact prompt with project context
+add_newline = true
+format = "[╭─](#82919d) $username$hostname$directory$git_branch$git_status$python$nodejs$golang$rust$cmd_duration$line_break$character"
+right_format = ""
+
+[username]
+show_always = true
+style_user = "bold #62b0e8"
+style_root = "bold #e88879"
+format = "[$user]($style) [·](#82919d) "
+
+[hostname]
+ssh_only = true
+style = "#62b0e8"
+format = "[at $hostname]($style) "
+
+[directory]
+style = "bold #62b0e8"
+format = "[$path]($style)[$read_only]($read_only_style) "
+truncation_length = 3
+truncation_symbol = "…/"
+truncate_to_repo = true
+read_only = " [locked]"
+read_only_style = "#e88879"
+
+[git_branch]
+symbol = ""
+style = "#62b0e8"
+format = "[git:$branch]($style) "
+
+[git_status]
+style = "#62b0e8"
+format = '([\[$all_status$ahead_behind\]]($style) )'
+
+[cmd_duration]
+min_time = 2000
+style = "#62b0e8"
+format = "[$duration]($style) "
+
+[character]
+success_symbol = "[╰─](#82919d)[›](bold #62b0e8)"
+error_symbol = "[╰─](#82919d)[›](bold #e88879)"
+vimcmd_symbol = "[╰─](#82919d)[‹](bold #62b0e8)"
+
+[python]
+symbol = "py "
+style = "#62b0e8"
+[nodejs]
+symbol = "node "
+style = "#a4c685"
+[golang]
+symbol = "go "
+style = "#6bc6cd"
+[rust]
+symbol = "rust "
+style = "#62b0e8"

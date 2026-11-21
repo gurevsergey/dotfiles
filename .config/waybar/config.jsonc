@@ -1,0 +1,62 @@
+[
+    {
+        "name": "big",
+        "height": 34,
+        "fixed-center": true,
+        "margin-top": 0,
+        "margin-left": 0,
+        "margin-right": 0,
+        "margin-bottom": 0,
+        "include": [
+            "~/.config/waybar/modules.jsonc"
+        ],
+        "output": [
+            "!GWD ARZOPA 0000002089130",
+            "*"
+        ]
+    },
+    {
+        "name": "compact",
+        "height": 34,
+        "fixed-center": false,
+        "margin-top": 0,
+        "margin-left": 0,
+        "margin-right": 0,
+        "margin-bottom": 0,
+        "include": [
+            "~/.config/waybar/modules.jsonc"
+        ],
+        "output": "GWD ARZOPA 0000002089130",
+        "modules-left": [
+            "custom/launcher",
+            "hyprland/workspaces",
+            "hyprland/window"
+        ],
+        "modules-center": [
+            "clock#msk",
+            "clock#hk"
+        ],
+        "modules-right": [
+            "custom/rec",
+            "custom/hop",
+            "tray",
+            "hyprland/language",
+            "pulseaudio",
+            "network",
+            "bluetooth",
+            "custom/notification",
+            "custom/power"
+        ],
+        "hyprland/window": {
+            "format": "{}",
+            "max-length": 18,
+            "separate-outputs": true
+        },
+        "network": {
+            "max-length": 12
+        },
+        "custom/hop": {
+            "max-length": 14
+        }
+    }
+]

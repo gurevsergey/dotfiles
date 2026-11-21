@@ -1,0 +1,59 @@
+# WinBox 4 — matches ~/.config/kitty/kitty.conf
+
+[window]
+padding = { x = 10, y = 10 }
+opacity = 1.0
+decorations_theme_variant = "Dark"
+
+[font]
+size = 12.5
+normal = { family = "JetBrainsMono Nerd Font Mono", style = "Regular" }
+bold = { style = "Bold" }
+italic = { style = "Italic" }
+bold_italic = { style = "Bold Italic" }
+
+[cursor]
+style = { shape = "Block", blinking = "Never" }
+
+[bell]
+duration = 0
+
+[colors.primary]
+background = "#20282f"
+foreground = "#d5dce2"
+
+[colors.cursor]
+text = "#20282f"
+cursor = "#62b0e8"
+
+[colors.selection]
+background = "#225c82"
+text = "#f0f4f7"
+
+[colors.normal]
+black = "#262e35"
+red = "#e88879"
+green = "#a4c685"
+yellow = "#62b0e8"
+blue = "#62b0e8"
+magenta = "#62b0e8"
+cyan = "#6bc6cd"
+white = "#d5dce2"
+
+[colors.bright]
+black = "#82919d"
+red = "#f0a391"
+green = "#bed9a1"
+yellow = "#c6a5e8"
+blue = "#8bcbf5"
+magenta = "#c6a5e8"
+cyan = "#afe0df"
+white = "#f0f4f7"
+
+[colors.search]
+matches = { foreground = "#f0f4f7", background = "#225c82" }
+focused_match = { foreground = "#20282f", background = "#62b0e8" }
+
+[colors.hints]
+start = { foreground = "#20282f", background = "#62b0e8" }
+end = { foreground = "#f0f4f7", background = "#225c82" }

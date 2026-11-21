@@ -1,0 +1,277 @@
+// Общие модули для всех баров. Раскладка по мониторам — в config.jsonc.
+// Иконки: Material Design (Nerd Font); обычные иконки наследуют цвет CSS.
+// Цвета состояний и календаря в <span> (Pango не понимает @define-color):
+//   accent #62b0e8 · success #74c69d · attention #e0a24a · danger #e5737a
+//   done #62b0e8 · severe #a3afb9 · sponsors #d982b0 · fg-muted #a3afb9 · fg-subtle #82919d
+// После правок этого файла waybar нужно перезапустить целиком (Super+Shift+B):
+// SIGUSR2-перезагрузка с модулем mpris роняет waybar.
+{
+    "layer": "top",
+    "position": "top",
+    "spacing": 2,
+    "reload_style_on_change": true,
+
+    "modules-left": ["custom/launcher", "hyprland/workspaces", "hyprland/window", "mpris"],
+    "modules-center": ["clock#msk", "clock#hk"],
+    "modules-right": [
+        "custom/rec",
+        "custom/hop",
+        "custom/pubip",
+        "cpu",
+        "memory",
+        "temperature",
+        "custom/ssd",
+        "tray",
+        "hyprland/language",
+        "pulseaudio",
+        "network",
+        "bluetooth",
+        "custom/notification",
+        "custom/power"
+    ],
+
+    // ── Слева ─────────────────────────────────────────────
+
+    "custom/launcher": {
+        "format": "󰀻",
+        "tooltip-format": "Приложения",
+        "on-click": "rofi -show drun"
+    },
+
+    "hyprland/workspaces": {
+        "format": "{name}",
+        "all-outputs": false,
+        "show-special": false,
+        "on-scroll-up": "hyprctl dispatch 'hl.dsp.focus({ workspace = \"e+1\" })'",
+        "on-scroll-down": "hyprctl dispatch 'hl.dsp.focus({ workspace = \"e-1\" })'"
+    },
+
+    "hyprland/window": {
+        "format": "{}",
+        "max-length": 28,
+        "separate-outputs": true
+    },
+
+    // ── Центр: часы и музыка ──────────────────────────────
+
+    "clock#msk": {
+        "timezone": "Europe/Moscow",
+        "format": "<span color='#62b0e8'>МСК</span>  {:%d.%m  %H:%M}",
+        "format-alt": "<span color='#62b0e8'>МСК</span>  {:%a %d %b  %H:%M:%S}",
+        "interval": 1,
+        "tooltip-format": "<tt><small>{calendar}</small></tt>",
+        "calendar": {
+            "mode": "month",
+            "weeks-pos": "right",
+            "on-scroll": 1,
+            "format": {
+                "months": "<span color='#f3f6f9'><b>{}</b></span>",
+                "days": "<span color='#d5dce2'>{}</span>",
+                "weeks": "<span color='#62b0e8'><b>W{}</b></span>",
+                "weekdays": "<span color='#e0a24a'><b>{}</b></span>",
+                "today": "<span color='#e5737a'><b><u>{}</u></b></span>"
+            }
+        },
+        "actions": {
+            "on-click-right": "mode",
+            "on-scroll-up": "shift_up",
+            "on-scroll-down": "shift_down"
+        }
+    },
+
+    "clock#hk": {
+        "timezone": "Asia/Hong_Kong",
+        "format": "<span color='#a3afb9'>HKG</span>  {:%H:%M}",
+        "format-alt": "<span color='#a3afb9'>HKG</span>  {:%a %d %b  %H:%M:%S}",
+        "interval": 1,
+        "tooltip-format": "Гонконг: {:%A, %d %B %Y}"
+    },
+
+    "mpris": {
+        // Клики (ЛКМ — пауза, ПКМ — следующий, СКМ — предыдущий) модуль
+        // обрабатывает сам и шлёт их именно показанному плееру
+        "format": "{player_icon}  {status_icon}  {dynamic}",
+        "format-paused": "{player_icon}  {status_icon}  <i>{dynamic}</i>",
+        "format-stopped": "",
+        "player-icons": {
+            "default": "󰝚",
+            // Яндекс Музыка (Electron) представляется как chromium
+            "chromium": "󰝚",
+            "spotify": "󰓇",
+            "firefox": "󰝚",
+            "mpv": "󰝚"
+        },
+        "status-icons": {
+            "playing": "󰏤",
+            "paused": "󰐊"
+        },
+        "dynamic-order": ["artist", "title"],
+        "dynamic-len": 24,
+        "dynamic-separator": " — ",
+        "tooltip-format": "{artist} — {title}\n{album}\n{position} / {length}\n\nЛКМ — пауза · ПКМ — следующий · СКМ — предыдущий"
+    },
+
+    // ── Справа: мониторинг ────────────────────────────────
+
+    // Индикатор записи экрана (~/.config/hypr/scripts/record.sh шлёт сигнал 8)
+    "custom/rec": {
+        "exec": "pgrep -x wf-recorder >/dev/null && echo '<span color=\"#e5737a\">●</span> REC' || true",
+        "interval": 5,
+        "signal": 8,
+        "tooltip-format": "Идёт запись — клик или Super+Shift+R остановит",
+        "on-click": "~/.config/hypr/scripts/record.sh"
+    },
+
+    // Туннель через sing-box (~/.local/bin/hop): флаг и город текущей локации;
+    // hop сам дёргает сигнал 9 при переключении, так что обновляется сразу
+    "custom/hop": {
+        "exec": "~/.local/bin/hop waybar",
+        "return-type": "json",
+        "interval": 10,
+        "signal": 9,
+        "on-click": "~/.local/bin/hop menu",
+        "on-click-right": "~/.local/bin/hop toggle"
+    },
+
+
+    // Публичный IP и страна; скрипт сам кэширует ответы ifconfig.co (напрямую) и ipinfo.io (через туннель) и
+    // перезапрашивает только при смене маршрута / туннеля или раз в 10 минут
+    "custom/pubip": {
+        "exec": "~/.config/waybar/scripts/pubip.sh",
+        "return-type": "json",
+        "interval": 5,
+        "on-click": "~/.config/waybar/scripts/pubip.sh --copy",
+        "on-click-right": "~/.config/waybar/scripts/pubip.sh --refresh"
+    },
+
+    "cpu": {
+        "interval": 3,
+        "format": "󰻠  {usage:>2}%",
+        "states": { "warning": 70, "critical": 90 },
+        "on-click": "kitty -e btop"
+    },
+
+    "memory": {
+        "interval": 5,
+        "format": "󰍛  {percentage:>2}%",
+        "tooltip-format": "{used:0.1f} / {total:0.1f} GiB\nswap {swapUsed:0.1f} / {swapTotal:0.1f} GiB",
+        "states": { "warning": 75, "critical": 90 },
+        "on-click": "kitty -e btop"
+    },
+
+    "temperature": {
+        "hwmon-path-abs": "/sys/devices/pci0000:00/0000:00:18.3/hwmon",  // k10temp (Ryzen), Tctl
+        "input-filename": "temp1_input",
+        "critical-threshold": 90,
+        "interval": 5,
+        "format": "{icon}  {temperatureC}°",
+        "format-critical": "<span color='#e5737a'>{icon}</span>  {temperatureC}°",
+        "format-icons": ["󱃃", "󰔏", "󱃂"],
+        "tooltip-format": "CPU Tctl: {temperatureC}°C"
+    },
+
+    // ── Справа: система ───────────────────────────────────
+
+    "custom/ssd": {
+        "exec": "~/.config/waybar/scripts/ssd-wear.py",
+        "return-type": "json",
+        "interval": 600,
+        "tooltip": true
+    },
+
+    "tray": {
+        "icon-size": 16,
+        "spacing": 8
+    },
+
+    "hyprland/language": {
+        "format": "󰌌  {}",
+        "format-en": "EN",
+        "format-ru": "RU",
+        "on-click": "hyprctl switchxkblayout all next"
+    },
+
+    "pulseaudio": {
+        "format": "{icon}  {volume}%",
+        "format-muted": "󰝟  mute",
+        "format-bluetooth": "󰂰  {volume}%",
+        "format-icons": {
+            "headphone": "󰋋",
+            "headset": "󰋎",
+            "default": ["󰕿", "󰖀", "󰕾"]
+        },
+        "scroll-step": 5,
+        "on-click": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
+        "on-click-right": "pavucontrol",
+        "tooltip-format": "{desc}"
+    },
+
+    "backlight": {
+        "format": "{icon}  {percent}%",
+        "format-icons": ["󰃞", "󰃟", "󰃠"],
+        "on-scroll-up": "brightnessctl -e4 -n2 set 5%+",
+        "on-scroll-down": "brightnessctl -e4 -n2 set 5%-"
+    },
+
+    "network": {
+        "format-wifi": "{icon}  {essid}",
+        "format-ethernet": "󰈀  LAN",
+        "format-linked": "<span color='#e0a24a'>󰈀</span>  нет IP",
+        "format-disconnected": "<span color='#e5737a'>󰤮</span>  офлайн",
+        "format-icons": ["󰤟", "󰤢", "󰤥", "󰤨"],
+        "tooltip-format-wifi": "{essid} ({signalStrength}%)\n{ipaddr}/{cidr}  via {gwaddr}\n󰇚 {bandwidthDownBytes}  󰕒 {bandwidthUpBytes}",
+        "tooltip-format-ethernet": "{ifname}\n{ipaddr}/{cidr}  via {gwaddr}\n󰇚 {bandwidthDownBytes}  󰕒 {bandwidthUpBytes}",
+        "interval": 3,
+        "on-click": "kitty --class nmtui -e nmtui",
+        "on-click-right": "nm-connection-editor"
+    },
+
+    "bluetooth": {
+        "format": "󰂯",
+        "format-disabled": "󰂲",
+        "format-off": "󰂲",
+        "format-connected": "󰂱  {num_connections}",
+        "tooltip-format-connected": "{device_enumerate}",
+        "tooltip-format-enumerate-connected": "{device_alias}  {device_battery_percentage}%",
+        "on-click": "~/.config/hypr/scripts/bt-menu.sh",
+        "on-click-right": "blueman-manager"
+    },
+
+    "battery": {
+        "states": { "warning": 25, "critical": 12 },
+        "format": "{icon}  {capacity}%",
+        "format-warning": "<span color='#e0a24a'>{icon}</span>  {capacity}%",
+        "format-critical": "<span color='#e5737a'>{icon}</span>  {capacity}%",
+        "format-charging": "󰂄  {capacity}%",
+        "format-plugged": "󰚥  {capacity}%",
+        "format-icons": ["󰁺", "󰁼", "󰁾", "󰂀", "󰁹"],
+        "tooltip-format": "{timeTo}\n{power:.1f} W"
+    },
+
+    "custom/notification": {
+        "tooltip": false,
+        "format": "{icon}",
+        "format-icons": {
+            "notification": "󰂚<span foreground='#e5737a'><sup></sup></span>",
+            "none": "󰂚",
+            "dnd-notification": "󰂛<span foreground='#e5737a'><sup></sup></span>",
+            "dnd-none": "󰂛",
+            "inhibited-notification": "󰂚<span foreground='#e5737a'><sup></sup></span>",
+            "inhibited-none": "󰂚",
+            "dnd-inhibited-notification": "󰂛<span foreground='#e5737a'><sup></sup></span>",
+            "dnd-inhibited-none": "󰂛"
+        },
+        "return-type": "json",
+        "exec-if": "command -v swaync-client",
+        "exec": "swaync-client -swb",
+        "on-click": "swaync-client -t -sw",
+        "on-click-right": "swaync-client -d -sw",
+        "escape": true
+    },
+
+    "custom/power": {
+        "format": "󰐥",
+        "tooltip-format": "Питание",
+        "on-click": "~/.config/waybar/scripts/powermenu.sh"
+    }
+}

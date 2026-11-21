@@ -1,0 +1,62 @@
+/* Палитра артефакта (как в Waybar, Rofi, Kitty, Obsidian) поверх libadwaita.
+   Переменные — libadwaita 1.6+, @define-color — для старых версий. */
+
+:root {
+  --accent-bg-color: #225c82;
+  --accent-fg-color: #f3f6f9;
+  --accent-color: #62b0e8;
+
+  --destructive-bg-color: #b8545b;
+  --destructive-fg-color: #f3f6f9;
+  --destructive-color: #e5737a;
+  --success-bg-color: #3f8a64;
+  --success-color: #74c69d;
+  --warning-bg-color: #a8722b;
+  --warning-color: #e0a24a;
+  --error-bg-color: #b8545b;
+  --error-color: #e5737a;
+
+  --window-bg-color: #262e35;
+  --window-fg-color: #d5dce2;
+  --view-bg-color: #262e35;
+  --view-fg-color: #d5dce2;
+  --headerbar-bg-color: #20282f;
+  --headerbar-fg-color: #d5dce2;
+  --headerbar-backdrop-color: #262e35;
+  --sidebar-bg-color: #20282f;
+  --sidebar-fg-color: #d5dce2;
+  --sidebar-backdrop-color: #222a31;
+  --secondary-sidebar-bg-color: #222a31;
+  --card-bg-color: #20282f;
+  --card-fg-color: #d5dce2;
+  --dialog-bg-color: #20282f;
+  --dialog-fg-color: #d5dce2;
+  --popover-bg-color: #20282f;
+  --popover-fg-color: #d5dce2;
+  --thumbnail-bg-color: #20282f;
+  --border-color: #3b4853;
+}
+
+@define-color accent_bg_color #225c82;
+@define-color accent_fg_color #f3f6f9;
+@define-color accent_color #62b0e8;
+@define-color destructive_bg_color #b8545b;
+@define-color destructive_color #e5737a;
+@define-color success_color #74c69d;
+@define-color warning_color #e0a24a;
+@define-color error_color #e5737a;
+@define-color window_bg_color #262e35;
+@define-color window_fg_color #d5dce2;
+@define-color view_bg_color #262e35;
+@define-color view_fg_color #d5dce2;
+@define-color headerbar_bg_color #20282f;
+@define-color headerbar_fg_color #d5dce2;
+@define-color headerbar_backdrop_color #262e35;
+@define-color sidebar_bg_color #20282f;
+@define-color sidebar_fg_color #d5dce2;
+@define-color card_bg_color #20282f;
+@define-color card_fg_color #d5dce2;
+@define-color dialog_bg_color #20282f;
+@define-color dialog_fg_color #d5dce2;
+@define-color popover_bg_color #20282f;
+@define-color popover_fg_color #d5dce2;
