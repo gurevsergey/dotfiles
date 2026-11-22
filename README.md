@@ -6,6 +6,10 @@ launcher, notifications, editors and GTK apps.
 
 ![Desktop: waybar, kitty with the waybar stylesheet, btop and a system summary](screenshots/desktop.png)
 
+| Neovim | tmux |
+|---|---|
+| ![Neovim with Rust source](screenshots/neovim.png) | ![tmux: Neovim, git log and a shell in three panes](screenshots/tmux.png) |
+
 ## What is inside
 
 | Path | What it is |

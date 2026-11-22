@@ -1,5 +1,7 @@
 # tmux — руководство
 
+![tmux: Neovim, git log and a shell in three panes](../screenshots/tmux.png)
+
 Руководство по tmux в той конфигурации, что установлена в этом репозитории (конфиг craftzdog с правками под Linux). Где что лежит и чем конфиг отличается от оригинала — в [Neovim и tmux](../README.md#neovim-and-tmux). Редактор — в [Neovim — руководство](neovim.md).
 
 > [!IMPORTANT]
