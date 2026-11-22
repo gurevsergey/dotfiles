@@ -16,7 +16,10 @@ launcher, notifications, editors and GTK apps.
 | `.config/fish/`, `.config/omf/`, `.config/starship.toml` | shell, prompt, tshark/termshark helpers |
 | `.config/rofi/`, `.config/swaync/` | launcher and notification centre |
 | `.config/gtk-3.0/`, `.config/gtk-4.0/` | GTK overrides |
+| `.config/nvim/` | Neovim 0.12 config, see below |
+| `.config/tmux/` | tmux config, prefix `Ctrl+T`, see below |
 | `.config/zed/`, `.config/Code/User/`, `.config/micro/` | editors, including three Zed themes |
+| `docs/` | guides to this tmux and Neovim setup (in Russian) |
 | `.config/btop/`, `.config/neofetch/`, `.config/glow/` | terminal tools |
 | `wallpapers/` | the wallpaper used by hyprpaper and hyprlock |
 
@@ -63,5 +66,19 @@ Things to change for your machine:
 - `NETBOX` in `.config/hypr/scripts/netbox-search.py`; its API token is read from `~/.config/netbox-search/token`
 - autostarted apps and web-app IDs in `hyprland.lua`
 - the wallpaper path in `hyprpaper.conf` and `hyprlock.conf` (`~/Pictures/Wallpapers/`)
+
+## Neovim and tmux
+
+`.config/nvim` and `.config/tmux` come from [craftzdog/dotfiles](https://github.com/craftzdog/dotfiles)
+by Takuya Matsuyama (commit `86edf45`); all credit for them goes to him. The Neovim config is unchanged.
+For tmux I added `linux.conf` (true colour and undercurl in kitty, `wl-copy`, `xdg-open`) and the one
+line in `tmux.conf` that loads it.
+
+```sh
+sudo pacman -S --needed neovim tmux lazygit tree-sitter-cli jq
+git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm   # then prefix + I
+```
+
+Guides: [tmux](docs/tmux.md), [Neovim](docs/neovim.md).
 
 The Waybar `hop` module belongs to [next-hop](https://github.com/gurevsergey/next-hop).
