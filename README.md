@@ -4,6 +4,8 @@ Arch Linux desktop on Hyprland: a two-monitor layout built around network work,
 with one graphite-and-blue palette (borrowed from WinBox 4) across the bar, terminal,
 launcher, notifications, editors and GTK apps.
 
+![Desktop: waybar, kitty with the waybar stylesheet, btop and a system summary](screenshots/desktop.png)
+
 ## What is inside
 
 | Path | What it is |
