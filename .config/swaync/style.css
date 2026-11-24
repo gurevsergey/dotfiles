@@ -1,21 +1,21 @@
-/* Dark minimal: matches the Waybar palette, font and rounded blocks. */
+/* bento · Unit-01: как waybar и экран блокировки. Старый стиль — style.css.bak-bento-20261125 */
 @import url("/etc/xdg/swaync/style.css");
 
 :root {
-    --cc-bg: #20282f;
-    --noti-bg: 32, 40, 47;
+    --cc-bg: #0b0b0b;
+    --noti-bg: 11, 11, 11;
     --noti-bg-alpha: 1;
-    --noti-bg-darker: #20282f;
-    --noti-bg-hover: #2d3740;
-    --noti-bg-focus: #193d55;
-    --noti-border-color: #3b4853;
-    --noti-close-bg: #2d3740;
-    --noti-close-bg-hover: #e5737a;
-    --text-color: #d5dce2;
-    --text-color-disabled: #82919d;
-    --bg-selected: #193d55;
-    --border: 1px solid #3b4853;
-    --border-radius: 3px;
+    --noti-bg-darker: #0b0b0b;
+    --noti-bg-hover: #1a1a1a;
+    --noti-bg-focus: #2a2116;
+    --noti-border-color: #262626;
+    --noti-close-bg: #1a1a1a;
+    --noti-close-bg-hover: #e0544a;
+    --text-color: #e8e0d0;
+    --text-color-disabled: #6a6a6a;
+    --bg-selected: #2a2116;
+    --border: 1px solid #262626;
+    --border-radius: 8px;
     --notification-shadow: none;
     --notification-icon-size: 32px;
     --notification-app-icon-size: 16px;
@@ -35,10 +35,10 @@
 }
 
 .control-center {
-    background: #20282f;
-    color: #d5dce2;
-    border: 1px solid #3b4853;
-    border-radius: 3px;
+    background: #0b0b0b;
+    color: #e8e0d0;
+    border: 1px solid #262626;
+    border-radius: 8px;
     padding: 14px;
     box-shadow: none;
 }
@@ -48,145 +48,145 @@
     padding: 8px 6px 0;
 }
 .widget-title > label {
-    color: #62b0e8;
+    color: #e0a060;
     font-size: 15px;
     font-weight: 700;
 }
 .widget-title > button {
-    color: #a3afb9;
+    color: #a8a8a8;
     background: transparent;
     background-image: none;
     border: 1px solid transparent;
-    border-radius: 3px;
+    border-radius: 8px;
     padding: 5px 7px;
     box-shadow: none;
     font-size: 12px;
 }
 .widget-title > button:hover {
-    color: #62b0e8;
-    background: #2d3740;
-    border-color: #3b4853;
+    color: #e0a060;
+    background: #1a1a1a;
+    border-color: #262626;
 }
-.widget-title > button:disabled { color: #3b4853; }
+.widget-title > button:disabled { color: #262626; }
 .widget-label { margin: 0; padding: 0 6px 14px; }
 .widget-label > label {
-    color: #62b0e8;
+    color: #e0a060;
     font-size: 15px;
     font-weight: 700;
 }
 .widget-dnd {
     margin: 0 6px 14px;
     padding: 12px 0;
-    border-top: 1px solid #3b4853;
-    border-bottom: 1px solid #3b4853;
+    border-top: 1px solid #262626;
+    border-bottom: 1px solid #262626;
     border-radius: 0;
 }
-.widget-dnd label { color: #a3afb9; font-size: 13px; }
+.widget-dnd label { color: #a8a8a8; font-size: 13px; }
 .widget-dnd switch {
-    background: #2d3740;
+    background: #1a1a1a;
     background-image: none;
-    border: 1px solid #3b4853;
-    border-radius: 3px;
+    border: 1px solid #262626;
+    border-radius: 8px;
     min-width: 40px;
     min-height: 20px;
     box-shadow: none;
 }
 .widget-dnd switch slider {
-    background: #82919d;
+    background: #6a6a6a;
     background-image: none;
     border: none;
-    border-radius: 3px;
+    border-radius: 8px;
     min-width: 14px;
     min-height: 14px;
     margin: 3px;
     box-shadow: none;
 }
-.widget-dnd switch:checked { background: #193d55; border-color: #62b0e8; }
-.widget-dnd switch:checked slider { background: #62b0e8; }
-.widget-dnd switch:focus-visible { outline: 1px solid #62b0e8; }
+.widget-dnd switch:checked { background: #2a2116; border-color: #e0a060; }
+.widget-dnd switch:checked slider { background: #e0a060; }
+.widget-dnd switch:focus-visible { outline: 1px solid #e0a060; }
 
 .control-center .control-center-list-placeholder {
-    color: #a3afb9;
+    color: #a8a8a8;
     opacity: 1;
 }
 .widget-notifications { margin: 0; padding: 0; }
 .notification-row .notification-background { padding: 5px 6px; }
 .notification-row .notification-background .notification {
-    background: #20282f;
-    border: 1px solid #3b4853;
-    border-left: 3px solid #62b0e8;
-    border-radius: 3px;
+    background: #0b0b0b;
+    border: 1px solid #262626;
+    border-left: 3px solid #e0a060;
+    border-radius: 8px;
 }
 .notification-row .notification-background .notification.low {
-    border-left-color: #3b4853;
+    border-left-color: #262626;
 }
 .notification-row .notification-background .notification.critical {
-    border-left-color: #e5737a;
+    border-left-color: #e0544a;
 }
 .notification-row .notification-background .notification .notification-default-action {
     padding: 12px;
-    border-radius: 3px;
+    border-radius: 8px;
 }
 .notification-row .notification-background .notification .notification-default-action .notification-content .text-box .summary {
-    color: #62b0e8;
+    color: #e0a060;
     font-weight: 700;
     font-size: 14px;
 }
 .notification-row .notification-background .notification.critical .notification-default-action .notification-content .text-box .summary {
-    color: #e5737a;
+    color: #e0544a;
 }
 .notification-row .notification-background .notification .notification-default-action .notification-content .text-box .time {
-    color: #82919d;
+    color: #6a6a6a;
     font-size: 11px;
     font-weight: 400;
 }
 .notification-row .notification-background .notification .notification-default-action .notification-content .text-box .body {
-    color: #d5dce2;
+    color: #e8e0d0;
     font-size: 14px;
 }
 .notification-row .notification-background .notification .notification-default-action .notification-content .image {
-    border-radius: 3px;
+    border-radius: 8px;
     margin-right: 10px;
 }
 .notification-group .notification-group-headers .notification-group-header {
-    color: #62b0e8;
+    color: #e0a060;
     font-size: 12px;
     font-weight: 700;
 }
 .close-button {
-    color: #a3afb9;
-    background: #2d3740;
-    border-radius: 3px;
+    color: #a8a8a8;
+    background: #1a1a1a;
+    border-radius: 8px;
     min-width: 20px;
     min-height: 20px;
     margin-top: 8px;
     margin-right: 8px;
 }
-.close-button:hover { background: #e5737a; color: #20282f; }
+.close-button:hover { background: #e0544a; color: #0b0b0b; }
 .notification-row .notification-background .notification .notification-action > button {
-    background: #2d3740;
+    background: #1a1a1a;
     background-image: none;
-    color: #62b0e8;
-    border: 1px solid #3b4853;
-    border-radius: 3px;
+    color: #e0a060;
+    border: 1px solid #262626;
+    border-radius: 8px;
     padding: 7px 10px;
     box-shadow: none;
 }
 .notification-row .notification-background .notification .notification-action > button:hover {
-    background: #193d55;
-    border-color: #62b0e8;
+    background: #2a2116;
+    border-color: #e0a060;
 }
 .floating-notifications .notification-row .notification-background { padding: 14px; }
 .floating-notifications .notification-row .notification-background .notification {
-    border-color: #3b4853;
-    border-left-color: #62b0e8;
+    border-color: #262626;
+    border-left-color: #e0a060;
 }
 .floating-notifications .notification-row .notification-background .notification.critical {
-    border-left-color: #e5737a;
+    border-left-color: #e0544a;
 }
 scrollbar { background: transparent; }
-scrollbar slider { background: #3b4853; border-radius: 3px; min-width: 4px; }
-scrollbar slider:hover { background: #3b4853; }
+scrollbar slider { background: #262626; border-radius: 8px; min-width: 4px; }
+scrollbar slider:hover { background: #262626; }
 
 /* Reserve full text height even when the list expands. */
 .widget-title { min-height: 34px; padding: 4px 6px; }
@@ -197,35 +197,47 @@ scrollbar slider:hover { background: #3b4853; }
 
 .widget-label { min-height: 26px; padding: 2px 6px; margin: 0; }
 .widget-label > label { min-height: 26px; }
-.widget-label:first-child > label { color: #62b0e8; }
+.widget-label:first-child > label { color: #e0a060; }
 .widget-dnd { margin-top: 12px; }
 .widget-buttons-grid { margin: 12px 6px 0; padding: 0; }
 .widget-buttons-grid flowboxchild { padding: 0; }
 .widget-buttons-grid flowboxchild > button {
-    color: #a3afb9;
-    background: #2d3740;
+    color: #a8a8a8;
+    background: #1a1a1a;
     background-image: none;
-    border: 1px solid #3b4853;
-    border-radius: 3px;
+    border: 1px solid #262626;
+    border-radius: 8px;
     box-shadow: none;
     padding: 8px 12px;
 }
 .widget-buttons-grid flowboxchild > button:hover {
-    color: #62b0e8;
-    background: #193d55;
+    color: #e0a060;
+    background: #2a2116;
 }
 
 /* Match the panel's compact hierarchy and muted labels. */
 .widget-label, .widget-label:first-child { padding: 6px 6px 4px; }
 .widget-label > label, .widget-label:first-child > label {
-    color: #d5dce2;
+    color: #e8e0d0;
     font-size: 16px;
     font-weight: 600;
     min-height: 30px;
 }
-.widget-buttons-grid flowboxchild > button { color: #d5dce2; }
+.widget-buttons-grid flowboxchild > button { color: #e8e0d0; }
 .widget-buttons-grid flowboxchild > button:hover {
-    color: #20282f;
-    background: #62b0e8;
-    border-color: #62b0e8;
+    color: #0b0b0b;
+    background: #e0a060;
+    border-color: #e0a060;
 }
+
+/* ── bento: карточки с охристой рамкой, моноширинный шрифт ── */
+* { font-family: "JetBrainsMono Nerd Font", "IBM Plex Sans", sans-serif; }
+.control-center { border: 2px solid #e0a060; border-radius: 10px; }
+.notification-row .notification-background .notification {
+    border: 2px solid #262626; border-radius: 10px; background: #0b0b0b;
+}
+.notification-row .notification-background .notification.critical { border-color: #c8312b; }
+.notification-row:focus .notification-background .notification,
+.notification-row:hover .notification-background .notification { border-color: #e0a060; }
+.notification .summary { color: #e0a060; font-weight: 700; }
+.widget-title > label { color: #0b0b0b; background: #e0a060; border-radius: 6px; padding: 2px 10px; }

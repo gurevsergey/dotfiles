@@ -1,0 +1,73 @@
+/* bento · Unit-01 — Firefox Home only; ordinary websites keep their own styles. */
+@-moz-document url("about:home"), url("about:newtab") {
+  :root, body {
+    color-scheme: dark !important;
+    --newtab-background-color: #0b0b0b !important;
+    --newtab-background-color-secondary: #121212 !important;
+    --newtab-background-card: #121212 !important;
+    --newtab-text-primary-color: #e8e0d0 !important;
+    --newtab-text-secondary-color: #a8a8a8 !important;
+    --newtab-primary-action-background: #e0a060 !important;
+    --newtab-primary-element-hover-color: #f0bb85 !important;
+    --newtab-primary-element-active-color: #c8884a !important;
+    --newtab-element-hover-color: #1a1a1a !important;
+    --newtab-element-secondary-color: #262626 !important;
+    --newtab-border-color: #262626 !important;
+    --newtab-search-icon-color: #a8a8a8 !important;
+    --newtab-search-dropdown-color: #121212 !important;
+    --newtab-search-dropdown-header-color: #1a1a1a !important;
+    --newtab-tile-shadow-secondary: 0 0 0 1px #262626 !important;
+    --color-accent-primary: #e0a060 !important;
+    --color-accent-primary-hover: #f0bb85 !important;
+    --color-accent-primary-active: #c8884a !important;
+    --focus-outline-color: #e0a060 !important;
+    background-color: #0b0b0b !important;
+    color: #e8e0d0 !important;
+    font-family: "IBM Plex Sans", sans-serif !important;
+  }
+  .search-wrapper .search-handoff-button,
+  .search-wrapper input {
+    background-color: #121212 !important;
+    color: #e8e0d0 !important;
+    border: 1px solid #262626 !important;
+    border-radius: 6px !important;
+    box-shadow: none !important;
+    font-family: inherit !important;
+  }
+  .search-wrapper .search-handoff-button:focus-within,
+  .search-wrapper input:focus {
+    border-color: #e0a060 !important;
+  }
+  .top-site-outer, .top-site-outer .tile,
+  .top-site-outer .top-site-icon, .context-menu,
+  .customize-menu, .personalize-button {
+    border-radius: 6px !important;
+  }
+  .top-site-outer .tile {
+    background-color: #121212 !important;
+    box-shadow: 0 0 0 1px #262626 !important;
+  }
+  .top-site-outer:hover { background-color: #1a1a1a !important; }
+  .top-site-outer .title { color: #a8a8a8 !important; }
+  .personalize-button {
+    background-color: #2a2116 !important;
+    color: #e0a060 !important;
+  }
+}
+
+/* Clean Home: also hide preloaded site panels at the rendering layer. */
+@-moz-document url("about:home"), url("about:newtab") {
+  .top-sites-list,
+  .top-site-outer,
+  .ds-layout-topsites,
+  .sections-list,
+  .discovery-stream {
+    display: none !important;
+  }
+
+  /* минимум кнопок: без карандаша «Настроить» и лишних виджетов */
+  .personalize-button, .customize-menu-button, button.personalize-button,
+  [data-l10n-id*="customize-panel-icon"], [data-l10n-id*="customize-menu"], .customize-button-wrapper,
+  .personalizeButtonWrapper, [class*="personalize"], button[data-l10n-id^="newtab-customize"], button[data-l10n-id^="newtab-personalize"],
+  .wallpaper-attribution, .weatherInfoLink, .shortcuts-refresh { display: none !important; }
+}

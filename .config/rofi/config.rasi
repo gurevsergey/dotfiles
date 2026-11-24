@@ -1,3 +1,6 @@
+/* bento · Unit-01 — как waybar и экран блокировки.
+   Общий для всех меню: приложения, окна, SSH, Bluetooth, питание, next-hop (VPN).
+   Старый стиль: config.rasi.bak-bento-20261125 */
 configuration {
     modi: "drun,run,window";
     show-icons: true;
@@ -7,60 +10,77 @@ configuration {
     sorting-method: "fzf";
     me-select-entry: "";
     me-accept-entry: "MousePrimary";
-    display-drun: "󰀻  Apps";
-    display-run: "  Run";
-    display-window: "󰖶  Windows";
+    display-drun: "󰀻  APPS";
+    display-run: "  RUN";
+    display-window: "󰖶  WINDOWS";
     drun-display-format: "{name}";
-    font: "IBM Plex Sans 11";
+    font: "JetBrainsMono Nerd Font Bold 11";
 }
 
 * {
-    bg:      #262e35;
-    bg-alt:  #20282f;
-    fg:      #d5dce2;
-    fg-dim:  #a3afb9;
-    accent:  #62b0e8;
-    accent2: #62b0e8;
+    canvas:  #0b0b0b;
+    surface: #1a1a1a;
+    border:  #262626;
+    ink:     #0b0b0b;
+    fg:      #e8e0d0;
+    fg-dim:  #a8a8a8;
+    art:     #c8312b;
+    main:    #e0a060;
+    session: #6fa06a;
+    clock:   #a8a8a8;
+    danger:  #e0544a;
     background-color: transparent;
     text-color: @fg;
 }
 
 window {
-    width: 600px;
-    background-color: @bg;
-    border: 1px;
-    border-color: @accent;
-    border-radius: 3px;
-    padding: 10px;
+    width: 640px;
+    background-color: @canvas;
+    border: 2px;
+    border-color: @main;
+    border-radius: 10px;
+    padding: 12px;
 }
 
-mainbox { spacing: 8px; children: [ inputbar, listview ]; }
+mainbox { spacing: 10px; children: [ inputbar, message, listview, mode-switcher ]; }
 
 inputbar {
-    background-color: @bg-alt;
-    border-radius: 3px;
-    padding: 10px 14px;
-    spacing: 10px;
+    spacing: 8px;
     children: [ prompt, entry ];
 }
-prompt { text-color: @accent; }
-entry  {
+prompt {
+    background-color: @main;
+    text-color: @ink;
+    border-radius: 6px;
+    padding: 9px 14px;
+}
+entry {
+    background-color: @surface;
+    border-radius: 6px;
+    padding: 9px 14px;
     placeholder: "Поиск...";
     placeholder-color: @fg-dim;
     text-color: @fg;
     cursor: text;
-    cursor-color: @accent2;
+    cursor-color: @main;
 }
 
+message {
+    background-color: @session;
+    border-radius: 6px;
+    padding: 8px 14px;
+}
+textbox { text-color: @ink; background-color: transparent; }
+
 listview {
-    lines: 8; columns: 1; spacing: 2px; scrollbar: false;
+    lines: 8; columns: 1; spacing: 3px; scrollbar: false;
     border: 0px;
     background-color: transparent;
 }
 
 element {
-    padding: 6px 10px;
-    border-radius: 3px;
+    padding: 7px 12px;
+    border-radius: 6px;
     spacing: 12px;
 }
 element-icon { size: 20px; background-color: transparent; }
@@ -68,7 +88,7 @@ element-text {
     vertical-align: 0.5;
     background-color: transparent;
     text-color: inherit;
-    highlight: bold #62b0e8;
+    highlight: bold #e0a060;
 }
 element normal.normal, element alternate.normal, element normal.active, element alternate.active {
     background-color: transparent;
@@ -76,12 +96,31 @@ element normal.normal, element alternate.normal, element normal.active, element 
 }
 element normal.urgent, element alternate.urgent {
     background-color: transparent;
-    text-color: #e5737a;
+    text-color: @danger;
 }
-element selected.normal, element selected.active, element selected.urgent {
-    background-color: #193d55;
-    text-color: #f3f6f9;
-    border: 0px 0px 0px 3px;
-    border-color: @accent;
+element selected.normal, element selected.active {
+    background-color: @main;
+    text-color: @ink;
 }
-element-text selected { text-color: #f3f6f9; highlight: bold underline #62b0e8; }
+element selected.urgent {
+    background-color: @art;
+    text-color: @ink;
+}
+element-text selected { text-color: @ink; highlight: bold underline #0b0b0b; }
+
+mode-switcher { spacing: 6px; }
+button {
+    background-color: @surface;
+    text-color: @fg-dim;
+    border-radius: 6px;
+    padding: 6px;
+}
+button selected { background-color: @clock; text-color: @ink; }
+
+error-message {
+    background-color: @canvas;
+    border: 2px;
+    border-color: @art;
+    border-radius: 10px;
+    padding: 14px;
+}

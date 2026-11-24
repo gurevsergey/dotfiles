@@ -1,0 +1,161 @@
+/* bento · Unit-01 — Firefox 160, как waybar, rofi и экран блокировки.
+ * Чёрный фон, активная вкладка — охристая плитка, минимум кнопок.
+ * Раскладка кнопок — в browser.uiCustomization.state (Настроить панель…).
+ * Старая тема WinBox: ../../backup-bento-20261125/userChrome.css */
+:root {
+  color-scheme: dark !important;
+  font-family: "JetBrainsMono Nerd Font", "IBM Plex Sans", sans-serif !important;
+  font-size: 12.5px !important;
+  --bento-bg: #0b0b0b;
+  --bento-surface: #1a1a1a;
+  --bento-line: #262626;
+  --bento-text: #e8e0d0;
+  --bento-muted: #a8a8a8;
+  --bento-main: #e0a060;
+  --bento-art: #c8312b;
+  --bento-ink: #0b0b0b;
+
+  --toolbox-background-color: var(--bento-bg) !important;
+  --toolbox-background-color-inactive: var(--bento-bg) !important;
+  --toolbox-text-color: var(--bento-text) !important;
+  --toolbox-text-color-inactive: var(--bento-muted) !important;
+  --toolbar-background-color: var(--bento-bg) !important;
+  --toolbar-text-color: var(--bento-text) !important;
+  --toolbar-field-background-color: var(--bento-surface) !important;
+  --toolbar-field-background-color-focus: var(--bento-surface) !important;
+  --toolbar-field-text-color: var(--bento-text) !important;
+  --toolbar-field-text-color-focus: #ffffff !important;
+  --toolbar-field-border-color: transparent !important;
+  --toolbar-field-border-color-focus: var(--bento-main) !important;
+  --toolbarbutton-icon-fill: var(--bento-text) !important;
+  --toolbarbutton-background-color-hover: var(--bento-surface) !important;
+  --toolbarbutton-background-color-active: var(--bento-line) !important;
+  --toolbarbutton-border-radius: 6px !important;
+  --lwt-accent-color: var(--bento-bg) !important;
+  --lwt-text-color: var(--bento-text) !important;
+  --lwt-toolbar-field-highlight: var(--bento-main) !important;
+  --lwt-toolbar-field-highlight-text: var(--bento-ink) !important;
+  --color-accent-primary: var(--bento-main) !important;
+  --color-accent-primary-hover: #f0bb85 !important;
+  --color-accent-primary-active: #c8884a !important;
+  --button-text-color-primary: var(--bento-ink) !important;
+  --focus-outline-color: var(--bento-main) !important;
+  --link-color: var(--bento-main) !important;
+  --text-color: var(--bento-text) !important;
+  --text-color-deemphasized: var(--bento-muted) !important;
+  --background-color-box: var(--bento-bg) !important;
+  --background-color-canvas: var(--bento-bg) !important;
+  --input-background-color: var(--bento-surface) !important;
+  --input-text-color: var(--bento-text) !important;
+  --border-color-deemphasized: var(--bento-line) !important;
+  --border-color-interactive: var(--bento-line) !important;
+  --button-background-color: var(--bento-surface) !important;
+  --button-background-color-hover: var(--bento-line) !important;
+  --button-background-color-active: var(--bento-line) !important;
+  --panel-background-color: var(--bento-bg) !important;
+  --panel-text-color: var(--bento-text) !important;
+  --panel-border-color: var(--bento-main) !important;
+  --panel-separator-color: var(--bento-line) !important;
+  --panel-border-radius: 10px !important;
+  --panel-menuitem-border-radius: 6px !important;
+  --panel-menuitem-padding-block: 6px !important;
+  --popup-border-radius: 10px !important;
+  --popup-border-color: var(--bento-main) !important;
+  --chrome-content-separator-color: var(--bento-line) !important;
+  --tab-min-height: 30px !important;
+  --tab-border-radius: 6px !important;
+  --tab-margin-block: 4px !important;
+  --tab-selected-bgcolor: var(--bento-main) !important;
+  --tab-selected-textcolor: var(--bento-ink) !important;
+  --urlbar-border-radius: 6px !important;
+  --urlbarView-results-padding: 4px !important;
+  --urlbarview-border-radius: 6px !important;
+}
+
+#navigator-toolbox, #TabsToolbar, #nav-bar, #PersonalToolbar, #toolbar-menubar,
+#titlebar, #sidebar-box, #sidebar-main, #sidebar-header {
+  background: var(--bento-bg) !important;
+  color: var(--bento-text) !important;
+  box-shadow: none !important;
+  border-color: var(--bento-line) !important;
+}
+#navigator-toolbox { border-bottom: 2px solid var(--bento-line) !important; }
+#nav-bar { border-top: none !important; padding-block: 2px 4px !important; }
+
+/* ── вкладки ── */
+.tab-background { border-radius: 6px !important; box-shadow: none !important; outline: none !important; }
+.tabbrowser-tab { color: var(--bento-muted) !important; font-weight: 700 !important; }
+.tabbrowser-tab:hover > .tab-stack > .tab-background { background: var(--bento-surface) !important; }
+.tabbrowser-tab:is([selected], [multiselected]) > .tab-stack > .tab-background {
+  background: var(--bento-main) !important;
+}
+.tabbrowser-tab:is([selected], [multiselected]) { color: var(--bento-ink) !important; }
+.tabbrowser-tab:is([selected], [multiselected]) .tab-close-button { fill: var(--bento-ink) !important; }
+.tabbrowser-tab[soundplaying] .tab-icon-overlay,
+.tabbrowser-tab[muted] .tab-icon-overlay { fill: var(--bento-ink) !important; }
+/* крестик только на активной вкладке и при наведении */
+.tabbrowser-tab:not([selected]):not(:hover) .tab-close-button { display: none !important; }
+
+/* ── минимум кнопок: то, что не убирается из раскладки ── */
+#firefox-view-button, #alltabs-button, #new-tab-button, #tabs-newtab-button,
+#smartwindow-group-tabs-button, #ai-window-toggle, #fxa-toolbar-menu-button,
+#reset-pbm-toolbar-button, #import-button, #sidebar-button,
+.titlebar-spacer[type="pre-tabs"], .titlebar-spacer[type="post-tabs"],
+#tracking-protection-icon-container, #picture-in-picture-button,
+#reader-mode-button, #translations-button, #shopping-sidebar-button,
+#urlbar-zoom-button, #pageActionButton, #star-button-box:not([starred]) {
+  display: none !important;
+}
+/* кнопки окна (свернуть/развернуть/закрыть) не нужны в тайловом WM */
+.titlebar-buttonbox-container { display: none !important; }
+
+/* ── адресная строка ── */
+#urlbar-background, #searchbar {
+  background: var(--bento-surface) !important;
+  border: 2px solid transparent !important;
+  border-radius: 6px !important;
+}
+#urlbar[focused] > #urlbar-background { border-color: var(--bento-main) !important; box-shadow: none !important; }
+#urlbar[open] > #urlbar-background {
+  background: var(--bento-bg) !important;
+  border-color: var(--bento-main) !important;
+  border-radius: 10px !important;
+}
+.urlbarView { color: var(--bento-text) !important; }
+.urlbarView-row[selected] .urlbarView-row-inner {
+  background: var(--bento-main) !important;
+  color: var(--bento-ink) !important;
+  border-radius: 6px !important;
+}
+.urlbarView-row[selected] .urlbarView-url,
+.urlbarView-row[selected] .urlbarView-action,
+.urlbarView-row[selected] .urlbarView-title-separator { color: var(--bento-ink) !important; }
+.urlbarView-row:not([selected]):hover .urlbarView-row-inner { background: var(--bento-surface) !important; }
+#identity-box, #identity-icon-box, #identity-permission-box { border-radius: 6px !important; }
+
+/* ── меню и панели ── */
+menupopup, panel {
+  --panel-background-color: var(--bento-bg) !important;
+  --panel-text-color: var(--bento-text) !important;
+  --panel-border-color: var(--bento-main) !important;
+}
+menupopup menuitem[_moz-menuactive], menupopup menu[_moz-menuactive] {
+  background: var(--bento-main) !important;
+  color: var(--bento-ink) !important;
+  border-radius: 6px !important;
+}
+
+/* загрузки: охристая стрелка прогресса */
+#downloads-indicator-progress-inner { background: var(--bento-main) !important; }
+#downloads-button[attention="success"] { fill: var(--bento-main) !important; }
+
+/* «вперёд» Firefox возвращает в раскладку сам — прячем; есть Alt+→ */
+#forward-button { display: none !important; }
+/* полоса значков новой боковой панели; сама панель — Ctrl+B / Ctrl+H */
+sidebar-main, #sidebar-main, #sidebar-launcher-splitter { display: none !important; }
+/* без затемнения вкладок и панели (в т. ч. у неактивного окна) */
+.tab-background, .tab-content, .tabbrowser-tab, #navigator-toolbox:-moz-window-inactive,
+#TabsToolbar:-moz-window-inactive, #nav-bar:-moz-window-inactive { opacity: 1 !important; }
+.tabbrowser-tab:is([selected], [multiselected]) > .tab-stack > .tab-background {
+  background-color: #e0a060 !important; background-image: none !important;
+}

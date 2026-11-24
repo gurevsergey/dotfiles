@@ -1,8 +1,8 @@
 // Общие модули для всех баров. Раскладка по мониторам — в config.jsonc.
 // Иконки: Material Design (Nerd Font); обычные иконки наследуют цвет CSS.
-// Цвета состояний и календаря в <span> (Pango не понимает @define-color):
-//   accent #62b0e8 · success #74c69d · attention #e0a24a · danger #e5737a
-//   done #62b0e8 · severe #a3afb9 · sponsors #d982b0 · fg-muted #a3afb9 · fg-subtle #82919d
+// Палитра bento Unit-01 (как экран блокировки). Цвета состояний и календаря в <span> (Pango не понимает @define-color):
+//   accent #e0a060 · success #8cc086 · attention #e8c547 · danger #e0544a
+//   done #e0a060 · severe #a8a8a8 · sponsors #b57edc · fg-muted #a8a8a8 · fg-subtle #6a6a6a
 // После правок этого файла waybar нужно перезапустить целиком (Super+Shift+B):
 // SIGUSR2-перезагрузка с модулем mpris роняет waybar.
 {
@@ -56,8 +56,8 @@
 
     "clock#msk": {
         "timezone": "Europe/Moscow",
-        "format": "<span color='#62b0e8'>МСК</span>  {:%d.%m  %H:%M}",
-        "format-alt": "<span color='#62b0e8'>МСК</span>  {:%a %d %b  %H:%M:%S}",
+        "format": "<span color='#0b0b0b'>МСК</span>  {:%d.%m  %H:%M}",
+        "format-alt": "<span color='#0b0b0b'>МСК</span>  {:%a %d %b  %H:%M:%S}",
         "interval": 1,
         "tooltip-format": "<tt><small>{calendar}</small></tt>",
         "calendar": {
@@ -65,11 +65,11 @@
             "weeks-pos": "right",
             "on-scroll": 1,
             "format": {
-                "months": "<span color='#f3f6f9'><b>{}</b></span>",
-                "days": "<span color='#d5dce2'>{}</span>",
-                "weeks": "<span color='#62b0e8'><b>W{}</b></span>",
-                "weekdays": "<span color='#e0a24a'><b>{}</b></span>",
-                "today": "<span color='#e5737a'><b><u>{}</u></b></span>"
+                "months": "<span color='#ffffff'><b>{}</b></span>",
+                "days": "<span color='#e8e0d0'>{}</span>",
+                "weeks": "<span color='#e0a060'><b>W{}</b></span>",
+                "weekdays": "<span color='#e8c547'><b>{}</b></span>",
+                "today": "<span color='#e0544a'><b><u>{}</u></b></span>"
             }
         },
         "actions": {
@@ -81,8 +81,8 @@
 
     "clock#hk": {
         "timezone": "Asia/Hong_Kong",
-        "format": "<span color='#a3afb9'>HKG</span>  {:%H:%M}",
-        "format-alt": "<span color='#a3afb9'>HKG</span>  {:%a %d %b  %H:%M:%S}",
+        "format": "<span color='#0b0b0b'>HKG</span>  {:%H:%M}",
+        "format-alt": "<span color='#0b0b0b'>HKG</span>  {:%a %d %b  %H:%M:%S}",
         "interval": 1,
         "tooltip-format": "Гонконг: {:%A, %d %B %Y}"
     },
@@ -115,14 +115,14 @@
 
     // Индикатор записи экрана (~/.config/hypr/scripts/record.sh шлёт сигнал 8)
     "custom/rec": {
-        "exec": "pgrep -x wf-recorder >/dev/null && echo '<span color=\"#e5737a\">●</span> REC' || true",
+        "exec": "pgrep -x wf-recorder >/dev/null && echo '<span color=\"#e0544a\">●</span> REC' || true",
         "interval": 5,
         "signal": 8,
         "tooltip-format": "Идёт запись — клик или Super+Shift+R остановит",
         "on-click": "~/.config/hypr/scripts/record.sh"
     },
 
-    // Туннель через sing-box (~/.local/bin/hop): флаг и город текущей локации;
+    // VPN через sing-box (~/.local/bin/hop): флаг и город текущей локации;
     // hop сам дёргает сигнал 9 при переключении, так что обновляется сразу
     "custom/hop": {
         "exec": "~/.local/bin/hop waybar",
@@ -134,8 +134,8 @@
     },
 
 
-    // Публичный IP и страна; скрипт сам кэширует ответы ifconfig.co (напрямую) и ipinfo.io (через туннель) и
-    // перезапрашивает только при смене маршрута / туннеля или раз в 10 минут
+    // Публичный IP и страна; скрипт сам кэширует ответы ifconfig.co (напрямую) и ipinfo.io (через VPN) и
+    // перезапрашивает только при смене маршрута / VPN или раз в 10 минут
     "custom/pubip": {
         "exec": "~/.config/waybar/scripts/pubip.sh",
         "return-type": "json",
@@ -165,7 +165,7 @@
         "critical-threshold": 90,
         "interval": 5,
         "format": "{icon}  {temperatureC}°",
-        "format-critical": "<span color='#e5737a'>{icon}</span>  {temperatureC}°",
+        "format-critical": "<span color='#e0544a'>{icon}</span>  {temperatureC}°",
         "format-icons": ["󱃃", "󰔏", "󱃂"],
         "tooltip-format": "CPU Tctl: {temperatureC}°C"
     },
@@ -216,8 +216,8 @@
     "network": {
         "format-wifi": "{icon}  {essid}",
         "format-ethernet": "󰈀  LAN",
-        "format-linked": "<span color='#e0a24a'>󰈀</span>  нет IP",
-        "format-disconnected": "<span color='#e5737a'>󰤮</span>  офлайн",
+        "format-linked": "<span color='#e8c547'>󰈀</span>  нет IP",
+        "format-disconnected": "<span color='#e0544a'>󰤮</span>  офлайн",
         "format-icons": ["󰤟", "󰤢", "󰤥", "󰤨"],
         "tooltip-format-wifi": "{essid} ({signalStrength}%)\n{ipaddr}/{cidr}  via {gwaddr}\n󰇚 {bandwidthDownBytes}  󰕒 {bandwidthUpBytes}",
         "tooltip-format-ethernet": "{ifname}\n{ipaddr}/{cidr}  via {gwaddr}\n󰇚 {bandwidthDownBytes}  󰕒 {bandwidthUpBytes}",
@@ -240,8 +240,8 @@
     "battery": {
         "states": { "warning": 25, "critical": 12 },
         "format": "{icon}  {capacity}%",
-        "format-warning": "<span color='#e0a24a'>{icon}</span>  {capacity}%",
-        "format-critical": "<span color='#e5737a'>{icon}</span>  {capacity}%",
+        "format-warning": "<span color='#e8c547'>{icon}</span>  {capacity}%",
+        "format-critical": "<span color='#e0544a'>{icon}</span>  {capacity}%",
         "format-charging": "󰂄  {capacity}%",
         "format-plugged": "󰚥  {capacity}%",
         "format-icons": ["󰁺", "󰁼", "󰁾", "󰂀", "󰁹"],
@@ -252,13 +252,13 @@
         "tooltip": false,
         "format": "{icon}",
         "format-icons": {
-            "notification": "󰂚<span foreground='#e5737a'><sup></sup></span>",
+            "notification": "󰂚<span foreground='#e0544a'><sup></sup></span>",
             "none": "󰂚",
-            "dnd-notification": "󰂛<span foreground='#e5737a'><sup></sup></span>",
+            "dnd-notification": "󰂛<span foreground='#e0544a'><sup></sup></span>",
             "dnd-none": "󰂛",
-            "inhibited-notification": "󰂚<span foreground='#e5737a'><sup></sup></span>",
+            "inhibited-notification": "󰂚<span foreground='#e0544a'><sup></sup></span>",
             "inhibited-none": "󰂚",
-            "dnd-inhibited-notification": "󰂛<span foreground='#e5737a'><sup></sup></span>",
+            "dnd-inhibited-notification": "󰂛<span foreground='#e0544a'><sup></sup></span>",
             "dnd-inhibited-none": "󰂛"
         },
         "return-type": "json",

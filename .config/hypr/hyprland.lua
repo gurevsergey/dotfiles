@@ -94,7 +94,9 @@ local menu        = "rofi -show drun"
 -------------------
 
 hl.on("hyprland.start", function ()
-    -- WinBox 4 uses the compositor's solid background; no wallpaper daemon needed.
+    -- Обои bento (как экран блокировки), генератор — sddm-bento-login/desktop/gen-wallpaper.py
+    hl.exec_cmd("hyprpaper")
+    hl.exec_cmd("~/.config/hypr/scripts/desk-widget.py")  -- виджет на столе: Kubernetes, Git, Docker, локальная LLM
     hl.exec_cmd("waybar")
     hl.exec_cmd("systemctl --user start swaync.service")  -- через unit, чтобы не дублировать D-Bus-активацию
     hl.exec_cmd("hypridle")
@@ -150,20 +152,20 @@ end
 ---- LOOK AND FEEL ----
 -----------------------
 
--- Палитра WinBox 4
+-- Палитра bento Unit-01, как у экрана блокировки (hyprlock.conf)
 local c = {
-    amber   = "rgba(62b0e8ff)",
-    muted   = "rgba(82919dff)",
-    teal    = "rgba(62b0e8ff)",
-    surface = "rgba(3b4853ff)",
+    amber   = "rgba(e0a060ff)",
+    muted   = "rgba(a8a8a8ff)",
+    teal    = "rgba(e0a060ff)",
+    surface = "rgba(262626ff)",
 }
 
 hl.config({
     general = {
-        gaps_in  = 3,
-        gaps_out = 6,
+        gaps_in  = 4,
+        gaps_out = 8,
 
-        border_size = 1,
+        border_size = 2,
 
         col = {
             active_border   = c.teal,
@@ -177,7 +179,7 @@ hl.config({
     },
 
     decoration = {
-        rounding       = 3,
+        rounding       = 8,
         rounding_power = 2.5,
 
         active_opacity   = 1.0,
@@ -190,8 +192,8 @@ hl.config({
             enabled      = true,
             range        = 12,
             render_power = 3,
-            color        = "rgba(0e1318cc)",
-            color_inactive = "rgba(0e131877)",
+            color        = "rgba(000000cc)",
+            color_inactive = "rgba(00000077)",
             offset       = { 0, 4 },
         },
 
@@ -269,7 +271,7 @@ hl.config({
     misc = {
         force_default_wallpaper = -1,
         disable_hyprland_logo   = true,
-        background_color = "rgb(262e35)",
+        background_color = "rgb(0b0b0b)",
         disable_splash_rendering = true,
         mouse_move_enables_dpms = true,
         key_press_enables_dpms  = true,
