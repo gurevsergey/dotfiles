@@ -1,0 +1,16 @@
+[SddmGreeterTheme]
+Name=Bento Login
+Description=Bento grid login theme: rounded cards, live HMSD bars, colour presets
+Author=sgurev
+Copyright=(c) 2026
+License=MIT (code), OFL (fonts)
+Type=sddm-theme
+Version=1.0
+Website=
+Screenshot=preview.png
+MainScript=Main.qml
+ConfigFile=theme.conf
+TranslationsDirectory=translations
+Theme-Id=bento-login
+Theme-API=2.0
+QtVersion=6

@@ -465,7 +465,7 @@ hl.window_rule({ name = "default-workspace-lg", match = { class = ".*" }, worksp
 -- Программы на своих рабочих столах
 hl.window_rule({ name = "ws-winbox",     match = { class = "(?i)^winbox" },          workspace = "1" })
 hl.window_rule({ name = "ws-firefox",    match = { class = "^firefox$" },             workspace = "2" })
-hl.window_rule({ name = "ws-kitty-main", match = { class = "^kitty-main$" },          workspace = "2" })
+hl.window_rule({ name = "ws-kitty-main", match = { class = "^kitty(-main)?$" },       workspace = "2" })  -- SUPER+Q/Enter запускают обычный kitty
 hl.window_rule({ name = "ws-netbox",     match = { class = "^FFPWA-01M3VNEX18YTZZNKAQ2XKJ6033$" }, workspace = "1" })
 hl.window_rule({ name = "ws-vscode",     match = { class = "(?i)^(code|com\\.microsoft\\.vscode)$" }, workspace = "3" })
 hl.window_rule({ name = "ws-grafana",    match = { class = "^FFPWA-01M3VNPW59ZGA5VBGYHR1Q0Z1B$" }, workspace = "4" })

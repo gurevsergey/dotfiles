@@ -1,0 +1,11 @@
+[Unit]
+Description=Collect system info for SDDM theme bento-login
+Before=display-manager.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/bento-sysinfo.sh
+Nice=10
+
+[Install]
+WantedBy=display-manager.service
