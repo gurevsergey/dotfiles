@@ -1,0 +1,88 @@
+#!/usr/bin/env bash
+# Шлюз этого ПК на домашнем MikroTik: Дом.ру (напрямую), London или SWE.
+# На роутере одно правило mangle «pc-gw: <IP ПК> …» (перед «London policy»):
+#   domru  — правило выключено: весь трафик через провайдера (bypass-адреса — как обычно в Лондон)
+#   london — new-routing-mark=MKT-LONDON (GRE через провайдера, запас — GRE через VPS, mihomo, blackhole)
+#   swe    — new-routing-mark=MKT-SWE (wg-swe, запас — mihomo)
+# Правила via-sweden и IPTV стоят выше и работают в любом режиме.
+#
+#   mkt-gw                 статус (человекочитаемо)
+#   mkt-gw status --json   статус для waybar
+#   mkt-gw domru|london|swe
+#   mkt-gw next            по кругу domru → london → swe
+#   mkt-gw menu            выбор в rofi
+set -u
+ROUTER=${MKT_GW_ROUTER:-admin@192.168.88.1}   # SSH-доступ к MikroTik по ключу
+PC_IP=${MKT_GW_PC_IP:-192.168.88.10}           # адрес этого ПК в LAN
+TAG="pc-gw: $PC_IP"
+MODES=(domru london swe)
+SIG=11   # waybar custom/gw: "signal": 11
+
+ssh_r() { ssh -o BatchMode=yes -o ConnectTimeout=4 "$ROUTER" "$1"; }
+
+# текущий режим: domru | london | swe | none (правила нет) | down (роутер недоступен)
+current() {
+    local line
+    line=$(ssh_r "/ip firewall mangle print terse where comment~\"^$TAG\"" 2>/dev/null) || { echo down; return; }
+    [[ -z $line ]] && { echo none; return; }
+    if [[ $line =~ ^[[:space:]]*[0-9]+[[:space:]]+X ]]; then echo domru
+    elif [[ $line == *new-routing-mark=MKT-LONDON* ]]; then echo london
+    elif [[ $line == *new-routing-mark=MKT-SWE* ]]; then echo swe
+    else echo none
+    fi
+}
+
+label() { case $1 in domru) echo "DOMRU" ;; london) echo "LONDON" ;; swe) echo "SWE" ;; *) echo "$1" ;; esac; }
+icon() { echo "󰛳"; }
+
+refresh_bar() {
+    pkill -RTMIN+$SIG waybar 2>/dev/null
+    "$HOME/.config/waybar/scripts/pubip.sh" --refresh >/dev/null 2>&1 &
+}
+
+set_mode() {
+    local m=$1 cmd
+    case $m in
+        domru)  cmd="/ip firewall mangle disable [find comment~\"^$TAG\"]" ;;
+        london) cmd="/ip firewall mangle set [find comment~\"^$TAG\"] new-routing-mark=MKT-LONDON disabled=no" ;;
+        swe)    cmd="/ip firewall mangle set [find comment~\"^$TAG\"] new-routing-mark=MKT-SWE disabled=no" ;;
+        *) echo "Ошибка: неизвестный шлюз «$m». Допустимые значения: domru, london, swe" >&2; return 2 ;;
+    esac
+    [[ $(current) == none ]] && { echo "Ошибка: на маршрутизаторе отсутствует правило «$TAG»" >&2; return 1; }
+    ssh_r "$cmd" || { echo "Ошибка: маршрутизатор недоступен" >&2; return 1; }
+    local now; now=$(current)
+    refresh_bar
+    if [[ $now == "$m" ]]; then
+        command -v notify-send >/dev/null && notify-send -a "MikroTik" -i network-workgroup "Шлюз переключён: $(label "$m")" "Трафик $PC_IP направляется через $(label "$m")"
+        echo "Шлюз переключён: $(label "$m")"
+    else
+        echo "Ошибка: переключение не выполнено, активный шлюз — $(label "$now")" >&2; return 1
+    fi
+}
+
+case ${1:-} in
+    ""|status)
+        m=$(current)
+        if [[ ${2:-} == --json ]]; then
+            case $m in
+                down) printf '{"text":"󰛳  GW ?","class":"down","tooltip":"Маршрутизатор MikroTik недоступен"}\n' ;;
+                none) printf '{"text":"󰛳  GW —","class":"down","tooltip":"На маршрутизаторе отсутствует правило pc-gw"}\n' ;;
+                *) printf '{"text":"%s  %s","class":"%s","tooltip":"Активный шлюз: %s\\n\\nЛКМ — переключить на следующий (DOMRU → LONDON → SWE)\\nПКМ — выбрать из списка"}\n' \
+                        "$(icon "$m")" "$(label "$m")" "$m" "$(label "$m")" ;;
+            esac
+        else
+            echo "Активный шлюз: $(label "$m")"
+        fi ;;
+    domru|london|swe) set_mode "$1" ;;
+    next)
+        m=$(current); i=0
+        for k in "${!MODES[@]}"; do [[ ${MODES[$k]} == "$m" ]] && i=$(((k + 1) % ${#MODES[@]})); done
+        set_mode "${MODES[$i]}" ;;
+    menu)
+        m=$(current)
+        pick=$(printf '󰖟  DOMRU — прямое подключение через провайдера\n󰆧  LONDON — GRE-туннель (Великобритания)\n󰆧  SWE — WireGuard-туннель (Швеция)\n' |
+            rofi -dmenu -i -p "Шлюз" -mesg "Активный шлюз: $(label "$m")") || exit 0
+        case $pick in *DOMRU*) set_mode domru ;; *LONDON*) set_mode london ;; *SWE*) set_mode swe ;; esac ;;
+    -h|--help) sed -n '2,15p' "$0" | sed 's/^# \{0,1\}//' ;;
+    *) echo "Использование: mkt-gw [status [--json]|domru|london|swe|next|menu]" >&2; exit 2 ;;
+esac
