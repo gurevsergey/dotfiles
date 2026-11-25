@@ -30,7 +30,7 @@
     "editor.lineHeight": 1.6,
     "terminal.integrated.fontFamily": "'IBM Plex Mono', 'JetBrainsMono Nerd Font Mono'",
     "markdown.preview.fontFamily": "'IBM Plex Sans', sans-serif",
-    "claudeCode.preferredLocation": "panel",
+    "claudeCode.preferredLocation": "sidebar",
     "claudeCode.hideOnboarding": true,
     "workbench.colorCustomizations": {
         "[Default Dark Modern]": {

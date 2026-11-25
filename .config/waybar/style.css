@@ -76,3 +76,10 @@ window#waybar.empty #window { padding: 0; margin: 0; }
     font-family: "JetBrainsMono Nerd Font"; font-weight: 400;
 }
 
+
+/* Шлюз ПК на MikroTik — плитка как у часов: Дом.ру серая, London охра, SWE зелёная */
+#custom-gw { background: @clock; color: @ink; padding: 0 12px; margin: 4px 6px; border-radius: 6px; }
+#custom-gw.london { background: @main; }
+#custom-gw.swe { background: @session; }
+#custom-gw.down { background: @art; }
+#custom-gw:hover { background: @text; }

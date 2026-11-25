@@ -1,6 +1,6 @@
 # WinBox 4 — compact prompt with project context
 add_newline = true
-format = "[╭─](#82919d) $username$hostname$directory$git_branch$git_status$python$nodejs$golang$rust$cmd_duration$line_break$character"
+format = "[╭─](#82919d) $username$hostname$directory$git_branch$git_status$kubernetes$python$nodejs$golang$rust$cmd_duration$line_break$character"
 right_format = ""
 
 [username]
@@ -54,3 +54,14 @@ style = "#6bc6cd"
 [rust]
 symbol = "rust "
 style = "#62b0e8"
+
+# Kubernetes: значок, кластер и текущий namespace (читается из ~/.kube/config)
+[kubernetes]
+disabled = false
+symbol = "☸ "
+style = "bold #e5c07b"
+format = '[$symbol$context(/$namespace)]($style) '
+
+[[kubernetes.contexts]]
+context_pattern = "kubernetes-admin@home"
+context_alias = "home"

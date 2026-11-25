@@ -6,7 +6,8 @@
   KUBERNETES  — kubectl (текущий контекст): узлы, поды по namespace, проблемные поды, VM KubeVirt
   GIT         — репозитории в ~/Projects: ветка, изменения, ahead/behind, последний коммит
   DOCKER      — запущенные контейнеры и статус; клик по строке — логи в kitty
-  LOCAL LLM   — Strata на 127.0.0.1:8080: модель, состояние, скорость, VRAM/GPU
+  LOCAL LLM   — Strata на 127.0.0.1:8080: модель, состояние, скорость, VRAM/GPU;
+                ComfyUI на 127.0.0.1:8188: очередь и занятая им VRAM (клик — открыть в браузере)
 Данные собираются в фоновом потоке: Docker/LLM — 3 с, Kubernetes — 15 с, Git — 30 с.
 
 Запуск из автостарта hyprland.lua; перезапуск:
@@ -47,6 +48,7 @@ MAIN, ART, OK, WARN, BAD = "#e0a060", "#c8312b", "#8cc086", "#e8c547", "#e0544a"
 MARGIN_LEFT, MARGIN_BOTTOM, CARD_W, GAP = 77, 278, 560, 14
 MAX_DOCKER, MAX_GIT, MAX_K8S = 4, 7, 5
 STRATA = "http://127.0.0.1:8080"
+COMFY = "http://127.0.0.1:8188"
 GIT_ROOTS = [HOME / "Projects"]
 GIT_DEPTH = 4
 EVERY = {"fast": 3, "k8s": 15, "git": 30}
@@ -130,6 +132,31 @@ def llm_state():
             "images": eng.get("images"), "live": m.get("live", {}),
             "last": max(reqs, key=lambda r: r.get("time", 0)) if reqs else None,
             "done": len(m.get("requests", []))}
+
+
+def comfy_state():
+    """None, если ComfyUI не отвечает; иначе версия, очередь и VRAM процесса (МиБ, из nvidia-smi)."""
+    try:
+        with urllib.request.urlopen(COMFY + "/system_stats", timeout=1) as r:
+            stats = json.load(r)
+        with urllib.request.urlopen(COMFY + "/queue", timeout=1) as r:
+            q = json.load(r)
+    except Exception:
+        return None
+    vram = None
+    rc, out = run(["nvidia-smi", "--query-compute-apps=pid,used_memory", "--format=csv,noheader,nounits"], 3)
+    for line in out.splitlines():
+        try:
+            pid, mem = [x.strip() for x in line.split(",")]
+            cmd = pathlib.Path(f"/proc/{pid}/cmdline").read_bytes().split(b"\0")
+            cwd = os.readlink(f"/proc/{pid}/cwd")
+        except Exception:
+            continue
+        if b"main.py" in cmd and b"8188" in cmd and "comfyui" in cwd.lower():
+            vram = int(float(mem))
+    return {"version": stats.get("system", {}).get("comfyui_version"),
+            "running": len(q.get("queue_running", [])), "pending": len(q.get("queue_pending", [])),
+            "vram": vram}
 
 
 def gpu_state():
@@ -404,7 +431,7 @@ class Widget(Gtk.Window):
         c.done(foot)
 
     # LOCAL LLM
-    def update_llm(self, s, gpu):
+    def update_llm(self, s, gpu, comfy=None):
         c = self.llm
         c.clear()
         mon = lambda: kitty("strata monitor", "strata", "monitor", "--url", STRATA)  # noqa: E731
@@ -433,6 +460,15 @@ class Widget(Gtk.Window):
             if last:
                 c.row(f"   <span color='{MUTED}'>последний ответ: {last['decode_tok_s']:.0f} tok/s · "
                       f"{last.get('output_tokens', 0)} ток · {last.get('duration_s', 0):.1f} с</span>")
+        if comfy is None:
+            c.row(f"{sq(SUBTLE)}  <span color='{SUBTLE}'>ComfyUI не запущен  127.0.0.1:8188</span>")
+        else:
+            busy = comfy["running"] or comfy["pending"]
+            state = (f"генерирует · в очереди {comfy['pending']}" if busy else "простаивает")
+            vram = f" · VRAM {comfy['vram'] / 1024:.1f} GB" if comfy["vram"] is not None else ""
+            c.row(f"{sq(WARN if busy else OK)}  <b>ComfyUI</b> <span color='{MUTED}'>"
+                  f"{esc(comfy['version'] or '')}  {state}{vram}</span>",
+                  lambda: subprocess.Popen(["xdg-open", COMFY], start_new_session=True))
         if gpu:
             name, used, total, util, temp = gpu
             k = max(0, min(16, round(used / total * 16)))
@@ -454,9 +490,9 @@ def main():
     def apply(kind, data):
         for w in widgets:
             if kind == "fast":
-                (items, stopped), llm, gpu = data
+                (items, stopped), llm, gpu, comfy = data
                 w.update_docker(items, stopped)
-                w.update_llm(llm, gpu)
+                w.update_llm(llm, gpu, comfy)
             elif kind == "k8s":
                 w.update_k8s(data)
             elif kind == "git":
@@ -464,7 +500,7 @@ def main():
         return False
 
     collectors = {
-        "fast": lambda: (docker_state(), llm_state(), gpu_state()),
+        "fast": lambda: (docker_state(), llm_state(), gpu_state(), comfy_state()),
         "k8s": k8s_state,
         "git": git_state,
     }

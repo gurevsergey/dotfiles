@@ -28,6 +28,14 @@ hl.monitor({
     mode     = "2560x1440@165",
     position = "0x0",
     scale    = 1,
+    -- HDR: панель 10 бит, ~DCI-P3, пик ~430 нит (по EDID)
+    bitdepth          = 10,
+    cm                = "hdr",
+    sdr_eotf          = "gamma22",   -- SDR-контент без «выцветания» в HDR-режиме
+    sdrbrightness     = 1.0,
+    sdrsaturation     = 1.0,
+    sdr_min_luminance = 0.005,
+    sdr_max_luminance = 250,
 })
 
 hl.monitor({
@@ -35,6 +43,14 @@ hl.monitor({
     mode     = "2560x1440@165",
     position = "2560x0",
     scale    = 1,
+    -- HDR: панель 10 бит, ~DCI-P3, пик ~430 нит (по EDID)
+    bitdepth          = 10,
+    cm                = "hdr",
+    sdr_eotf          = "gamma22",   -- SDR-контент без «выцветания» в HDR-режиме
+    sdrbrightness     = 1.0,
+    sdrsaturation     = 1.0,
+    sdr_min_luminance = 0.005,
+    sdr_max_luminance = 250,
 })
 
 -- ARZOPA: highrr выбирает 1024x768@75 вместо полного разрешения.
@@ -126,6 +142,8 @@ end)
 ---- ENVIRONMENT VARIABLES ----
 -------------------------------
 
+-- Чуть плотнее тонкие штрихи шрифтов на ~93 PPI и тёмной теме (stem darkening FreeType)
+hl.env("FREETYPE_PROPERTIES", "cff:no-stem-darkening=0 autofitter:no-stem-darkening=0")
 hl.env("XCURSOR_SIZE", "24")
 hl.env("HYPRCURSOR_SIZE", "24")
 hl.env("QT_QPA_PLATFORM", "wayland;xcb")

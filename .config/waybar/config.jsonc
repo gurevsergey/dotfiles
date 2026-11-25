@@ -39,6 +39,7 @@
         "modules-right": [
             "custom/rec",
             "custom/hop",
+            "custom/gw",
             "tray",
             "hyprland/language",
             "pulseaudio",

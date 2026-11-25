@@ -16,6 +16,7 @@
     "modules-right": [
         "custom/rec",
         "custom/hop",
+        "custom/gw",
         "custom/pubip",
         "cpu",
         "memory",
@@ -124,6 +125,17 @@
 
     // VPN через sing-box (~/.local/bin/hop): флаг и город текущей локации;
     // hop сам дёргает сигнал 9 при переключении, так что обновляется сразу
+    // Шлюз ПК на MikroTik (правило pc-gw): ЛКМ — Дом.ру → London → SWE, ПКМ — меню.
+    // В fish то же самое: gw, gw london, gw swe, gw domru.
+    "custom/gw": {
+        "exec": "~/.local/bin/mkt-gw status --json",
+        "return-type": "json",
+        "interval": 30,
+        "signal": 11,
+        "on-click": "~/.local/bin/mkt-gw next",
+        "on-click-right": "~/.local/bin/mkt-gw menu"
+    },
+
     "custom/hop": {
         "exec": "~/.local/bin/hop waybar",
         "return-type": "json",
